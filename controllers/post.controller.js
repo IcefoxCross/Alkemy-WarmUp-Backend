@@ -29,3 +29,14 @@ exports.getPost = (req, res) => {
         }
     }).catch(err => res.status(500).send({message: err.message}));
 };
+
+exports.createPost = (req, res) => {
+    Post.create({
+        title: req.body.title,
+        content: req.body.content,
+        image: req.body.image,
+        categoryId: req.body.categoryId
+    }).then(() => {
+        res.send({message: 'Post was created successfully!'});
+    }).catch(err => res.status(500).send({message: err.message}));
+};
