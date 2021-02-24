@@ -1,4 +1,3 @@
-const { Sequelize } = require('../models');
 const db = require('../models');
 const Post = db.post;
 const Category = db.category;
@@ -45,5 +44,12 @@ exports.updatePost = (req, res) => {
     Post.update(req.body, {where: {id: req.params.id}
     }).then(() => {
         res.send({message: 'Post was updated successfully!'});
+    }).catch(err => res.status(500).send({message: err.message}));
+};
+
+exports.deletePost = (req, res) => {
+    Post.destroy({where: {id: req.params.id}
+    }).then(() => {
+        res.send({message: 'Post was deleted successfully!'});
     }).catch(err => res.status(500).send({message: err.message}));
 };

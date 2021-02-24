@@ -6,4 +6,5 @@ module.exports = function(app) {
     app.get('/posts/:id', controller.getPost);
     app.post('/posts', validator.validateImagePost, controller.createPost);
     app.patch('/posts/:id', validator.validateImagePatch, controller.updatePost);
+    app.delete('/posts/:id', controller.deletePost);
 };
