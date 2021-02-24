@@ -13,16 +13,26 @@ const Post = db.post;
 const Category = db.category;
 
 /// Production init
-//db.sequelize.sync();
+db.sequelize.sync().then(() => {
+    console.log('Database connected');
+});
 /// Developer init
-db.sequelize.sync({force: true}).then(() => {
+/*db.sequelize.sync({force: true}).then(() => {
     console.log('Drop and resync DB');
     initialize();
-}).catch(err => console.log(err));
+}).catch(err => console.log(err));*/
 
 function initialize() {
-    Category.create({name: 'Food'});
     Category.create({name: 'Social'}).then(category => {
+        Post.create({
+            title: 'Travel!',
+            content: "I'm going to New York!",
+            image: 'https://thumbs.dreamstime.com/z/statue-liberty-landmarks-new-york-city-manhattan-background-93345298.jpg',
+            created_at: new Date(),
+            categoryId: category.id
+        });
+    });
+    Category.create({name: 'Food'}).then(category => {
         Post.create({
             title: 'Hello!',
             content: 'I like pizza, and you?',
@@ -37,6 +47,8 @@ function initialize() {
 app.get('/', (req,res) => {
     res.json('Welcome to the Blog');
 });
+
+require('./routes/post.routes')(app);
 
 // Server Init
 const PORT = process.env.PORT || 8080;
