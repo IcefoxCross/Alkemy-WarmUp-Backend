@@ -40,3 +40,10 @@ exports.createPost = (req, res) => {
         res.send({message: 'Post was created successfully!'});
     }).catch(err => res.status(500).send({message: err.message}));
 };
+
+exports.updatePost = (req, res) => {
+    Post.update(req.body, {where: {id: req.params.id}
+    }).then(() => {
+        res.send({message: 'Post was updated successfully!'});
+    }).catch(err => res.status(500).send({message: err.message}));
+};
